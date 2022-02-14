@@ -33,11 +33,8 @@ describe("GET /api/topics: ", () => {
     return request(app)
       .get('/api/topicz')
       .expect(404)
-      .then((res) => {
-        const message = JSON.parse(res.text);
-        const msg = message.msg
-        expect(res.notFound).toBe(true);
-        expect(msg).toBe("path not found");
+      .then(({body}) => {
+        expect(body.msg).toBe("path not found");
       });
   });
 });
