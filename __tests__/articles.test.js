@@ -14,7 +14,7 @@ beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
 describe("GET /api/articles/:id ", () => {
-  xit("status 200: returns a valid article", () => {
+  it("status 200: returns a valid article", () => {
     return request(app)
       .get('/api/articles/1')
       .expect(200)
@@ -30,7 +30,7 @@ describe("GET /api/articles/:id ", () => {
         }))
         });
       });
-  xit("status 400: returns 'bad request' when passed an invalid id", () => {
+  it("status 400: returns 'bad request' when passed an invalid id", () => {
     return request(app)
       .get('/api/articles/not-a-valid-id')
       .expect(400)
@@ -38,7 +38,7 @@ describe("GET /api/articles/:id ", () => {
         expect(msg).toBe("bad request");
       });
   });
-  xit("status 404: returns a 404 error when passed properly formed url, but does not exist in database", () => {
+  it("status 404: returns a 404 error when passed properly formed url, but does not exist in database", () => {
     return request(app)
       .get('/api/articles/999')
       .expect(404)
@@ -93,6 +93,36 @@ describe('PATCH /api/articles/:article_id', () => {
       .expect(400)
       .then(({body: {msg}}) => {
         expect(msg).toBe("bad request");
+      });
+  });
+  it('status 400: responds with bad request when passed invalid article_id', () => {
+    const articleUpdates = { inc_votes: 1 };
+    return request(app)
+      .patch('/api/articles/invalid-id')
+      .send(articleUpdates)
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
+      });
+  });
+  it('status 400: responds with bad request when passed a valid article_id without inc_votes property', () => {
+    const articleUpdates = {};
+    return request(app)
+      .patch('/api/articles/1')
+      .send(articleUpdates)
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
+      });
+  });
+  it('status 404: respond with article not found when passed an id that does not exist', () => {
+    const articleUpdates = { inc_votes: 1 };
+    return request(app)
+      .patch('/api/articles/99')
+      .send(articleUpdates)
+      .expect(404)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("article not found");
       });
   });
 });

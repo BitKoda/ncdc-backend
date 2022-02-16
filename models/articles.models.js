@@ -19,6 +19,11 @@ exports.updateArticleById = (articleId, body) => {
     .query(
       'UPDATE articles SET votes = votes + $2 WHERE article_id = $1 RETURNING *;', [articleId, inc_votes]
   ).then(({ rows }) => {
+    // If no article is returned (does not exist)
+    if (rows.length === 0) {
+      return Promise.reject({status: 404, msg: "article not found"});
+    }
+    
     return rows[0];
   });
 }
