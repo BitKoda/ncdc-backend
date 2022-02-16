@@ -14,11 +14,17 @@ const {
 
 const {
   getArticleById,
+  patchArticleById,
 } = require('./controllers/articles.controllers');
 
+// --- TOPICS --- //
 app.get('/api/topics', getAllTopics);
-app.get('/api/articles/:id', getArticleById);
 
+// --- ARTICLES --- //
+app.get('/api/articles/:id', getArticleById);
+app.patch('/api/articles/:id', patchArticleById);
+
+// --- ERROR HANDLING --- //
 app.all('/api/*', (req, res) => {
   res.status(404).send({msg: "path not found"});
 });

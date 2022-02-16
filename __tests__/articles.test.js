@@ -14,7 +14,7 @@ beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
 describe("GET /api/articles/:id ", () => {
-  it("status 200: returns a valid article", () => {
+  xit("status 200: returns a valid article", () => {
     return request(app)
       .get('/api/articles/1')
       .expect(200)
@@ -30,7 +30,7 @@ describe("GET /api/articles/:id ", () => {
         }))
         });
       });
-  it("status 400: returns 'bad request' when passed an invalid id", () => {
+  xit("status 400: returns 'bad request' when passed an invalid id", () => {
     return request(app)
       .get('/api/articles/not-a-valid-id')
       .expect(400)
@@ -38,12 +38,61 @@ describe("GET /api/articles/:id ", () => {
         expect(msg).toBe("bad request");
       });
   });
-  it("status 404: returns a 404 error when passed properly formed url, but does not exist in database", () => {
+  xit("status 404: returns a 404 error when passed properly formed url, but does not exist in database", () => {
     return request(app)
       .get('/api/articles/999')
       .expect(404)
       .then(({body: {msg}}) => {
         expect(msg).toBe("article not found");
+      });
+  });
+});
+
+describe('PATCH /api/articles/:article_id', () => {
+  it('status 200: responds with the updated article with vote count increased by 1', () => {
+    const articleUpdates = { inc_votes: 1 };
+    return request(app)
+      .patch('/api/articles/1')
+      .send(articleUpdates)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toEqual({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 101,
+        });
+      });
+   });
+  it('status 200: responds with the updated article with vote count decreased by 100', () => {
+    const articleUpdates = { inc_votes: -100 };
+    return request(app)
+      .patch('/api/articles/1')
+      .send(articleUpdates)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toEqual({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 0,
+        });
+      });
+  });
+  it('status 400: responds with bad request with vote is not a number', () => {
+    const articleUpdates = { inc_votes: "string" };
+    return request(app)
+      .patch('/api/articles/1')
+      .send(articleUpdates)
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
       });
   });
 });
