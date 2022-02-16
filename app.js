@@ -9,6 +9,10 @@ const {
 } = require('./errors.js');
 
 const {
+  getAllUsers,
+} = require('./controllers/users.controllers');
+
+const {
   getAllTopics,
 } = require('./controllers/topics.controllers');
 
@@ -16,6 +20,10 @@ const {
   getArticleById,
   patchArticleById,
 } = require('./controllers/articles.controllers');
+
+
+// --- USERS --- //
+app.get('/api/users', getAllUsers);
 
 // --- TOPICS --- //
 app.get('/api/topics', getAllTopics);
