@@ -9,6 +9,10 @@ const {
 } = require('./errors.js');
 
 const {
+  getCommentsByArticleId,
+} = require('./controllers/comments.controllers.js');
+
+const {
   getAllUsers,
 } = require('./controllers/users.controllers');
 
@@ -33,6 +37,9 @@ app.get('/api/topics', getAllTopics);
 app.get('/api/articles', getAllArticles);
 app.get('/api/articles/:id', getArticleById);
 app.patch('/api/articles/:id', patchArticleById);
+
+// --- COMMENTS --- //
+app.get('/api/articles/:id/comments', getCommentsByArticleId);
 
 // --- ERROR HANDLING --- //
 app.all('/api/*', (req, res) => {
