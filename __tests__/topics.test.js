@@ -29,13 +29,5 @@ describe("GET /api/topics: ", () => {
         });
       });
   });
-  it("returns a 404 error when passed incorrect url", () => {
-    return request(app)
-      .get('/api/topicz')
-      .expect(404)
-      .then(({body}) => {
-        expect(body.msg).toBe("path not found");
-      });
-  });
 });
 
