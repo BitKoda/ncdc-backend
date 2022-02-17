@@ -2,7 +2,7 @@ const db = require('../db/connection.js');
 
 exports.selectArticleById = (articleId) => {
   return db.query(
-    'SELECT * FROM articles WHERE article_id = $1;', [articleId]
+    'SELECT articles.*, COUNT(comments.article_id) AS comment_count FROM articles LEFT JOIN comments ON comments.article_id = articles.article_id WHERE articles.article_id = $1 GROUP BY articles.article_id;', [articleId]
   ).then(({ rows }) => {
     // If no article is returned (does not exist)
     if (rows.length === 0) {
