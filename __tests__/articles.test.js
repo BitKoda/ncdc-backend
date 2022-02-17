@@ -48,6 +48,41 @@ describe("GET /api/articles/:id ", () => {
   });
 });
 
+describe("GET /api/articles/:article_id/comments", () => {
+  it("status 200: returns an array of 11 comments associated article 1", () => {
+    return request(app)
+      .get('/api/articles/1/comments')
+      .expect(200)
+      .then(({body: {comments}}) => {
+        expect(comments).toHaveLength(11);
+      });
+  });
+  it("status 200: returns an empty array for an article 2, which has no comments", () => {
+    return request(app)
+      .get('/api/articles/2/comments')
+      .expect(200)
+      .then(({body: {comments}}) => {
+        expect(comments).toHaveLength(0);
+      });
+  });
+  it("status 400: returns 'bad request' when passed 'not-a-valid-id' as id", () => {
+    return request(app)
+      .get('/api/articles/not-a-valid-id/comments')
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
+      });
+  });
+  it("status 404: when passed a valid id (99), but it does not exist in database", () => {
+    return request(app)
+      .get('/api/articles/99/comments')
+      .expect(404)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("article not found");
+      });
+  });
+});
+
 describe('PATCH /api/articles/:article_id', () => {
   it('status 200: responds with the updated article with vote count increased by 1', () => {
     const articleUpdates = { inc_votes: 1 };
