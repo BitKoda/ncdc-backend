@@ -13,6 +13,36 @@ const data = require('../db/data/test-data/index')
 beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
+describe("GET /api/articles", () => {
+  it("returns an array of 12 articles that each include author, title, article_id, topic, created_at, and votes fields", () => {
+    return request(app)
+      .get('/api/articles')
+      .expect(200)
+      .then(({body}) => {
+        const topics = body.articles;
+        expect(topics).toHaveLength(12);
+        topics.forEach((article) => {
+          expect(article).toEqual(expect.objectContaining({
+            article_id: expect.any(Number),
+            author: expect.any(String),
+            title: expect.any(String),
+            topic: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+          }));
+        });
+      });
+  });
+  it("returns a 404 error when passed incorrect url - /api/articlez", () => {
+    return request(app)
+      .get('/api/articlez')
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe("path not found");
+      });
+  });
+});
+
 describe("GET /api/articles/:id ", () => {
   it("status 200: returns a valid article", () => {
     return request(app)
