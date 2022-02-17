@@ -23,13 +23,5 @@ describe("GET /api/users", () => {
         });
       });
   });
-  it("returns a 404 error when passed incorrect url", () => {
-    return request(app)
-      .get('/api/userz')
-      .expect(404)
-      .then(({body}) => {
-        expect(body.msg).toBe("path not found");
-      });
-  });
 });
 
