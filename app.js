@@ -17,6 +17,7 @@ const {
 } = require('./controllers/topics.controllers');
 
 const {
+  getAllArticles,
   getArticleById,
   patchArticleById,
 } = require('./controllers/articles.controllers');
@@ -29,6 +30,7 @@ app.get('/api/users', getAllUsers);
 app.get('/api/topics', getAllTopics);
 
 // --- ARTICLES --- //
+app.get('/api/articles', getAllArticles);
 app.get('/api/articles/:id', getArticleById);
 app.patch('/api/articles/:id', patchArticleById);
 
