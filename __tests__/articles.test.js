@@ -30,11 +30,12 @@ describe("GET /api/articles/:id ", () => {
         }))
       });
   });
-  it("status 200: returns the article with a comment_count, if there are any", () => {
+  it("status 200: returns article id=1 with a comment_count of 11", () => {
     return request(app)
       .get('/api/articles/1')
       .expect(200)
       .then(({body}) => {
+        expect(body.article.comment_count).toBe("11");
         expect(body.article).toEqual(expect.objectContaining({
           article_id: expect.any(Number),
           title: expect.any(String),
