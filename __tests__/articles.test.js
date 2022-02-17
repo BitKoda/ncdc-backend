@@ -50,8 +50,26 @@ describe("GET /api/articles/:id ", () => {
           created_at: expect.any(String),
           votes: expect.any(Number)
         }))
-        });
       });
+  });
+  it("status 200: returns article id=1 with a comment_count of 11", () => {
+    return request(app)
+      .get('/api/articles/1')
+      .expect(200)
+      .then(({body}) => {
+        expect(body.article.comment_count).toBe("11");
+        expect(body.article).toEqual(expect.objectContaining({
+          article_id: expect.any(Number),
+          title: expect.any(String),
+          topic: expect.any(String),
+          author: expect.any(String),
+          body: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          comment_count: expect.any(String)
+        }))
+      });
+  });
   it("status 400: returns 'bad request' when passed an invalid id", () => {
     return request(app)
       .get('/api/articles/not-a-valid-id')
