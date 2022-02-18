@@ -1,14 +1,22 @@
 const db = require('../db/connection.js');
 
-exports.selectAllArticles = () => {
+exports.selectAllArticles = (sort_by = "created_at", order = "DESC") => {
+  // allowed sort columns
+  const allowedSortCols = ["author", "title", "topic", "votes", "created_at"];
+
+  if (!allowedSortCols.includes(sort_by)) {
+    return Promise.reject({ status: 400, msg: "bad request" });
+  }
+
   return db.query(
     `SELECT articles.*, 
     COUNT(comments.article_id) AS comment_count 
     FROM articles 
     LEFT JOIN comments ON comments.article_id = articles.article_id 
     GROUP BY articles.article_id
-    ORDER BY created_at DESC;`
+    ORDER BY ${sort_by} ${order};`
   ).then(({rows}) => {
+    console.log(rows, "RETURNED FROM MODEL")
     return rows;
   });
 }

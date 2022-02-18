@@ -9,14 +9,13 @@ beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
 describe("GET /api/articles", () => {
-  it("status 200: responds with an array of articles sorted on created_at DESC by default", () => {
+  it("status 200: responds with an array of articles", () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
       .then(({body: {articles}}) => {
         expect(articles).toBeInstanceOf(Array);
         expect(articles).toHaveLength(12);
-        expect(articles).toBeSortedBy('created_at', { descending: true });
         articles.forEach((article) => {
           expect(article).toEqual(expect.objectContaining({
             article_id: expect.any(Number),
@@ -27,6 +26,46 @@ describe("GET /api/articles", () => {
             votes: expect.any(Number),
           }));
         });
+      });
+  });
+  it("status 200: GET /api/articles?sort_by=created_at responds with articles sorted by descending date order", () => {
+    return request(app)
+      .get('/api/articles?sort_by=created_at')
+      .expect(200)
+      .then(({body: {articles}}) => {
+        expect(articles).toBeSortedBy('created_at', {descending: true});
+      });
+  });
+  it("status 200: GET /api/articles?sort_by=author responds with articles sorted by descending author order", () => {
+    return request(app)
+      .get('/api/articles?sort_by=author')
+      .expect(200)
+      .then(({body: {articles}}) => {
+        expect(articles).toBeSortedBy('author', {descending: true});
+      });
+  });
+  it.only("status 400: GET /api/articles?sort_by=invalid-col-name responds 'bad request'", () => {
+    return request(app)
+      .get('/api/articles?sort_by=invalid-col-name')
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
+      });
+  });
+  it("status 200: GET /api/articles?order=asc responds with articles sorted by ascending date order", () => {
+    return request(app)
+      .get('/api/articles?order=asc')
+      .expect(200)
+      .then(({body: {articles}}) => {
+        expect(articles).toBeSortedBy('created_at');
+      });
+  });
+  it("status 200: GET /api/articles is filtered by topic", () => {
+    return request(app)
+      .get('/api/articles?order=asc')
+      .expect(200)
+      .then(({body: {articles}}) => {
+        expect(articles).toBeSortedBy('created_at');
       });
   });
   it("status 200: returns an array of articles, each article includes comment_count", () => {
