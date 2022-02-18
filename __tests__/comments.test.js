@@ -16,24 +16,19 @@ describe("POST /api/articles/:article_id/comments", () => {
       author: 'icellusedkars',
       body: 'The quick brown fox jumps over the lazy dog.'
     };
-    //const timestamp = new Date().toISOString();
     return request(app)
       .post('/api/articles/2/comments')
       .send(newComment)
       .expect(201)
       .then(({ body: { comment }}) => {
-        expect(comment.article_id).toBe(newComment.article_id);
-        expect(comment.comment_id).toBe(newComment.comment_id);
-        expect(comment.author).toBe(newComment.author);
-        expect(comment.body).toBe(newComment.body);
-        //expect(comment).toEqual({
-        //  article_id: 2,
-        //  comment_id: 19,
-        //  created_at: new Date().toISOString(), //timestamp,
-        //  votes: 0,
-        //  ...newComment,
-        //});
-      });
+          expect(comment).toEqual(expect.objectContaining({
+            article_id: expect.any(Number),
+            comment_id: expect.any(Number),
+            author: expect.any(String),
+            body: expect.any(String),
+            created_at: expect.any(String),
+      }));
+    });
   });
   it('status 400: comment not created', () => {
     const badComment = {
@@ -48,7 +43,7 @@ describe("POST /api/articles/:article_id/comments", () => {
       .expect(400)
       .then(({body: {msg}}) => {
         expect(msg).toBe('bad request') // would prefer 'comment not created!'
-      });
+      }); // can do that with a Promise.reject in model... a refactor for later!
   });
 });
 
