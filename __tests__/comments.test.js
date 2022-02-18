@@ -41,6 +41,19 @@ describe("POST /api/articles/:article_id/comments", () => {
         expect(msg).toBe('bad request') // would prefer 'comment not created!'
       }); // can do that with a Promise.reject in model... a refactor for later!
   });
+  it('status 400: comment not created - username passed but incorrect', () => {
+    const badUsername = {
+      author: 'icellusedkarzzz',
+      body: 'The quick brown fox jumps over the lazy dog.'
+    };
+    return request(app)
+      .post('/api/articles/2/comments')
+      .send(badUsername)
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe('bad request')
+      }); 
+  });
   it('status 400: comment not created - POST /api/articles/9999/comments - article_id does not exist', () => {
     const comment = {
       author: 'icellusedkars',

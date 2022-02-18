@@ -10,6 +10,7 @@ exports.selectCommentsByArticleId = (article_id) => {
 
 exports.insertCommentOnArticle = (newComment, article_id) => {
   const {author, body} = newComment;
+  console.log(author);
   return db
     .query(
       'INSERT INTO comments (article_id, author, body) VALUES ($1, $2, $3) RETURNING *;', [article_id, author, body]
