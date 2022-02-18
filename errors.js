@@ -1,5 +1,15 @@
 exports.handlePSQLerr = (err, req, res, next) => {
-  if (err.code === "22P02" || err.code === "23502") res.status(400).send({msg: "bad request"});
+  // PostgreSQL error codes used here:
+  // 22P02 - invalid_text_representation
+  // 23502 - not_null_violation
+  // 23503 - foreign_key_violation
+  const psqlErrorCodes = [
+    "22P02",
+    "23502",
+    "23503"
+  ]
+  
+  if (psqlErrorCodes.includes(err.code)) res.status(400).send({msg: "bad request"});
   else next(err);
 }
 
