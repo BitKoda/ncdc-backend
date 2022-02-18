@@ -1,10 +1,29 @@
 const db = require('../db/connection.js');
 
-exports.selectAllArticles = () => {
-  return db.query(
-    'SELECT articles.*, COUNT(comments.article_id) AS comment_count FROM articles LEFT JOIN comments ON comments.article_id = articles.article_id GROUP BY articles.article_id;'
-  ).then(({rows}) => {
-    return rows;
+exports.selectAllArticles = (sort_by = "created_at", order = "DESC", topic) => {
+  // allowed sort columns
+  const allowedSortCols = ["author", "title", "topic", "votes", "created_at"];
+
+  if (!allowedSortCols.includes(sort_by)) {
+    return Promise.reject({ status: 400, msg: "bad request" });
+  }
+
+  let sqlQuery = 
+    `SELECT articles.*, 
+    COUNT(comments.article_id) AS comment_count 
+    FROM articles 
+    LEFT JOIN comments ON comments.article_id = articles.article_id `;
+
+  if (topic) {
+    sqlQuery += `WHERE topic='${topic}' `;
+  }
+
+  sqlQuery += `GROUP BY articles.article_id ORDER BY ${sort_by} ${order};`;
+  
+  return db
+    .query(sqlQuery)
+    .then(({rows}) => {
+      return rows;
   });
 }
 
