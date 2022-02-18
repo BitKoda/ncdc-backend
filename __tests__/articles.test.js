@@ -5,16 +5,11 @@ const connection = require('../db/connection.js');
 const seed = require('../db/seeds/seed.js');
 const data = require('../db/data/test-data/index')
 
-//const {
-// articleData,
-//} = require("../db/data/test-data/articles");
-
-
 beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
 describe("GET /api/articles", () => {
-  it("returns an array of 12 articles that each include author, title, article_id, topic, created_at, and votes fields", () => {
+  it("status 200: returns an array of 12 articles that each include author, title, article_id, topic, created_at, and votes fields", () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
@@ -33,6 +28,29 @@ describe("GET /api/articles", () => {
         });
       });
   });
+  it("status 200: returns an array of 12 articles, each article includes comment_count", () => {
+    return request(app)
+      .get('/api/articles')
+      .expect(200)
+      .then(({body}) => {
+        const { articles } = body;
+        expect(articles).toBeInstanceOf(Array);
+        expect(articles).toHaveLength(12);
+        articles.forEach((article) => {
+          expect(article).toEqual(
+            expect.objectContaining({
+              article_id: expect.any(Number),
+              title: expect.any(String),
+              topic: expect.any(String),
+              author: expect.any(String),
+              body: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              comment_count: expect.any(String)
+          }))
+        })
+      })
+  })
 });
 
 describe("GET /api/articles/:id ", () => {
