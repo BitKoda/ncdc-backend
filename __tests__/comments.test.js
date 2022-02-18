@@ -11,8 +11,6 @@ afterAll(() => connection.end());
 describe("POST /api/articles/:article_id/comments", () => {
   it('status:201, responds with a comment created on an article', () => {
     const newComment = {
-      article_id: 2,
-      comment_id: 19,
       author: 'icellusedkars',
       body: 'The quick brown fox jumps over the lazy dog.'
     };
@@ -30,11 +28,9 @@ describe("POST /api/articles/:article_id/comments", () => {
       }));
     });
   });
-  it('status 400: comment not created', () => {
+  it('status 400: comment not created - username missing', () => {
     const badComment = {
-      article_id: 2,
-      comment_id: 19,
-      // no author
+      // no username / author
       body: 'The quick brown fox jumps over the lazy dog.'
     };
     return request(app)
@@ -44,6 +40,27 @@ describe("POST /api/articles/:article_id/comments", () => {
       .then(({body: {msg}}) => {
         expect(msg).toBe('bad request') // would prefer 'comment not created!'
       }); // can do that with a Promise.reject in model... a refactor for later!
+  });
+  it('status 400: comment not created - POST /api/articles/9999/comments - article_id does not exist', () => {
+    const comment = {
+      author: 'icellusedkars',
+      body: 'The quick brown fox jumps over the lazy dog.'
+    };
+    return request(app)
+      .post('/api/articles/9999/comments')
+      .send(comment)
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe('bad request');
+      }); 
+  });
+  it("status 400: returns 'bad request' when passed 'not-a-valid-id' as id", () => {
+    return request(app)
+      .get('/api/articles/not-a-valid-id/comments')
+      .expect(400)
+      .then(({body: {msg}}) => {
+        expect(msg).toBe("bad request");
+      });
   });
 });
 
