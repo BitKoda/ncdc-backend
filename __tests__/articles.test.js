@@ -44,7 +44,7 @@ describe("GET /api/articles", () => {
         expect(articles).toBeSortedBy('author', {descending: true});
       });
   });
-  it.only("status 400: GET /api/articles?sort_by=invalid-col-name responds 'bad request'", () => {
+  it("status 400: GET /api/articles?sort_by=invalid-col-name responds 'bad request'", () => {
     return request(app)
       .get('/api/articles?sort_by=invalid-col-name')
       .expect(400)
@@ -60,12 +60,20 @@ describe("GET /api/articles", () => {
         expect(articles).toBeSortedBy('created_at');
       });
   });
-  it("status 200: GET /api/articles is filtered by topic", () => {
+  it("status 200: GET /api/articles?topic=cats returns a filtered array of articles by topic", () => {
     return request(app)
-      .get('/api/articles?order=asc')
+      .get('/api/articles?topic=cats')
       .expect(200)
       .then(({body: {articles}}) => {
-        expect(articles).toBeSortedBy('created_at');
+        expect(articles).toHaveLength(1);
+      });
+  });
+  it("status 200: GET /api/articles?topic=no-topic returns an empty array", () => {
+    return request(app)
+      .get('/api/articles?topic=no-topic')
+      .expect(200)
+      .then(({body: {articles}}) => {
+        expect(articles).toHaveLength(0);
       });
   });
   it("status 200: returns an array of articles, each article includes comment_count", () => {
