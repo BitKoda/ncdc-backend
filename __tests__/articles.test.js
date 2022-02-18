@@ -9,14 +9,15 @@ beforeEach(() => seed(data));
 afterAll(() => connection.end());
 
 describe("GET /api/articles", () => {
-  it("status 200: returns an array of 12 articles that each include author, title, article_id, topic, created_at, and votes fields", () => {
+  it("status 200: responds with an array of articles sorted on created_at DESC by default", () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
-      .then(({body}) => {
-        const topics = body.articles;
-        expect(topics).toHaveLength(12);
-        topics.forEach((article) => {
+      .then(({body: {articles}}) => {
+        expect(articles).toBeInstanceOf(Array);
+        expect(articles).toHaveLength(12);
+        expect(articles).toBeSortedBy('created_at', { descending: true });
+        articles.forEach((article) => {
           expect(article).toEqual(expect.objectContaining({
             article_id: expect.any(Number),
             author: expect.any(String),
@@ -28,7 +29,7 @@ describe("GET /api/articles", () => {
         });
       });
   });
-  it("status 200: returns an array of 12 articles, each article includes comment_count", () => {
+  it("status 200: returns an array of articles, each article includes comment_count", () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
