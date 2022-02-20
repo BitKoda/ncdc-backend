@@ -29,7 +29,14 @@ exports.selectAllArticles = (sort_by = "created_at", order = "DESC", topic) => {
 
 exports.selectArticleById = (articleId) => {
   return db.query(
-    'SELECT articles.*, COUNT(comments.article_id) AS comment_count FROM articles LEFT JOIN comments ON comments.article_id = articles.article_id WHERE articles.article_id = $1 GROUP BY articles.article_id;', [articleId]
+    `SELECT articles.*, 
+    COUNT(comments.article_id) 
+    AS comment_count 
+    FROM articles 
+    LEFT JOIN comments 
+    ON comments.article_id = articles.article_id 
+    WHERE articles.article_id = $1 
+    GROUP BY articles.article_id;`, [articleId]
   ).then(({ rows }) => {
     // If no article is returned (does not exist)
     if (rows.length === 0) {
@@ -44,7 +51,10 @@ exports.updateArticleById = (articleId, body) => {
   const inc_votes = body.inc_votes;
   return db
     .query(
-      'UPDATE articles SET votes = votes + $2 WHERE article_id = $1 RETURNING *;', [articleId, inc_votes]
+      `UPDATE articles 
+      SET votes = votes + $2 
+      WHERE article_id = $1 
+      RETURNING *;`, [articleId, inc_votes]
   ).then(({ rows }) => {
     // If no article is returned (does not exist)
     if (rows.length === 0) {

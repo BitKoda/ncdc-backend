@@ -12,6 +12,8 @@ afterAll(() => connection.end());
 describe('DELETE /api/comments/:comment_id', () => {
   test('status:204, responds with an empty response body', () => {
     return request(app).delete('/api/comments/18').expect(204);
+  });
+});
     
 describe("POST /api/articles/:article_id/comments", () => {
   it('status:201, responds with a comment created on an article', () => {

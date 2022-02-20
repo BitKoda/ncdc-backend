@@ -1,0 +1,86 @@
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "GET /api/topics": {
+    "description": "serves an array of all topics",
+    "queries": [],
+    "exampleResponse": {
+      "topics": [{ "slug": "football", "description": "Footie!" }]
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [{ "username": "user1" }]
+    }
+  },
+  "GET /api/articles": {
+    "description": "serves an array of all articles",
+    "queries": ["author", "topic", "sort_by", "order"],
+    "exampleResponse": {
+      "articles": [
+        {
+          "title": "Seafood substitutions are increasing",
+          "topic": "cooking",
+          "author": "weegembump",
+          "body": "Text from the article..",
+          "created_at": 1527695953341
+        }
+      ]
+    }
+  },
+  "GET /api/articles/:article_id": {
+    "description": "serves an individual article",
+    "exampleResponse": {
+      "article": [
+        {
+          "author": "weegembump",
+          "title": "Seafood substitutions are increasing",
+          "article_id": 1,
+          "body": "Text from the article..",
+          "topic": "cooking",
+          "created_at": 1527695953341,
+          "votes": 100,
+          "comment_count": 0
+        }
+      ]
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "requests update to the vote count on an individual article",
+    "queries": ["votes"],
+    "exampleResponse": {
+      "article": [
+        {
+          "author": "weegembump",
+          "title": "Seafood substitutions are increasing",
+          "article_id": 1,
+          "body": "Text from the article..",
+          "topic": "cooking",
+          "created_at": 1527695953341,
+          "votes": 101,
+          "comment_count": 0
+        }
+      ]
+    }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "posts an comment to an individual article",
+    "queries": ["username", "body"],
+    "exampleResponse": {
+      "comment": [
+        {
+          "username": "weegembump",
+          "body": "Text from the comment.."
+        }
+      ]
+    }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "deletes a comment",
+    "queries": [],
+    "exampleResponse": {}
+  }
+}
