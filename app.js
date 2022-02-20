@@ -8,6 +8,8 @@ const {
   handle500err 
 } = require('./errors.js');
 
+const data = require('./res.json');
+
 const {
   getCommentsByArticleId,
   removeCommentById,
@@ -28,6 +30,10 @@ const {
   patchArticleById,
 } = require('./controllers/articles.controllers');
 
+// --- HOME --- //
+app.get('/api', function (req, res) {
+  res.json(data);
+});
 
 // --- USERS --- //
 app.get('/api/users', getAllUsers);
