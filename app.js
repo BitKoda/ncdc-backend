@@ -60,8 +60,4 @@ app.use(handlePSQLerr);
 app.use(handleCustomErr);
 app.use(handle500err);
 
-//const server = app.listen(3000, () => {
-//  console.log('Server running....')
-//}
-
 module.exports = app;
