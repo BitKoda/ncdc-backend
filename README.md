@@ -9,7 +9,7 @@ This is a news application inspired by reddit and created with Node.js, Express,
   - [Cloning & Dependencies <a name="cloning-dependencies"></a>](#cloning--dependencies-)
   - [Create dotenv files <a name="create-dotenv-files"></a>](#create-dotenv-files-)
   - [Seeding & Testing <a name="seeding-testing"></a>](#seeding--testing-)
-- [Link To Hosted Application on Heroku <a name="link-to-api"></a>](#link-to-hosted-application-on-heroku-)
+- [Link To Hosted Application on Heroku <a name="link-to-api"></a>](#link-to-api)
 
 # General-Information <a name="general-information"></a>
 
@@ -81,10 +81,6 @@ To run the tests:
 - npm test
 ```
 
-# Link to API <a name="link-to-hosted-api"></a>
+# Link to API <a name="link-to-api"></a>
 
 <a href="http://ncdc-backend.herokuapp.com/api">Hosted NCDC news API</a>
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/96417438/154854696-8dc47627-30c1-4dfc-9bc6-c41ee4708310.png">
-</p>
