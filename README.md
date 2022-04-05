@@ -1,6 +1,6 @@
 # NCDC-BACKEND API
 
-This is a news application inspired by reddit and created with Node.js, Express, and PostgreSQL. Testing is done with Jest and Supertest, and hosted on Heroku.
+This is a news api inspired by reddit and created with Node.js, Express, and PostgreSQL. Testing is done with Jest and Supertest, and hosted on Heroku.
 
 # Table of contents
 - [General-Information <a name="general-information"></a>](#general-information-)
