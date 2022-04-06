@@ -13,7 +13,13 @@
     "description": "serves an array of all users",
     "queries": [],
     "exampleResponse": {
-      "users": [{ "username": "user1" }]
+      "users": [
+        { 
+        "username": "tickle122",
+        "name": "Tom Tickle",
+        "avatar_url": "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953" 
+        }
+      ]
     }
   },
   "GET /api/articles": {
@@ -22,11 +28,14 @@
     "exampleResponse": {
       "articles": [
         {
+          "article_id": 1,
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
           "author": "weegembump",
           "body": "Text from the article..",
-          "created_at": 1527695953341
+          "created_at": 1527695953341,
+          "votes": 100,
+          "comment_count": 10
         }
       ]
     }
@@ -34,46 +43,48 @@
   "GET /api/articles/:article_id": {
     "description": "serves an individual article",
     "exampleResponse": {
-      "article": [
+      "article": 
         {
-          "author": "weegembump",
-          "title": "Seafood substitutions are increasing",
           "article_id": 1,
-          "body": "Text from the article..",
+          "title": "Seafood substitutions are increasing",
           "topic": "cooking",
+          "author": "weegembump",
+          "body": "Text from the article..",
           "created_at": 1527695953341,
           "votes": 100,
           "comment_count": 0
         }
-      ]
     }
   },
   "PATCH /api/articles/:article_id": {
     "description": "requests update to the vote count on an individual article",
-    "queries": ["votes"],
+    "queries": [],
     "exampleResponse": {
-      "article": [
+      "article": 
         {
-          "author": "weegembump",
-          "title": "Seafood substitutions are increasing",
           "article_id": 1,
-          "body": "Text from the article..",
+          "title": "Seafood substitutions are increasing",
           "topic": "cooking",
+          "author": "weegembump",
+          "body": "Text from the article..",
           "created_at": 1527695953341,
           "votes": 101,
           "comment_count": 0
         }
-      ]
     }
   },
   "POST /api/articles/:article_id/comments": {
     "description": "posts an comment to an individual article",
-    "queries": ["username", "body"],
+    "queries": [],
     "exampleResponse": {
       "comment": [
         {
-          "username": "weegembump",
-          "body": "Text from the comment.."
+          "comment_id": 114,
+          "body": "Text from the comment..",
+          "article_id": 34,
+          "username": "tickle122",
+          "votes": 0,
+          "created_at": 1527695953341
         }
       ]
     }

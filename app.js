@@ -12,7 +12,7 @@ const {
   handle500err 
 } = require('./errors.js');
 
-const data = require('./res.json');
+const data = require('./endpoints.json');
 
 const {
   getCommentsByArticleId,

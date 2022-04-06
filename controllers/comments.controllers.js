@@ -1,7 +1,6 @@
 const { 
   selectCommentsByArticleId,  
   deleteCommentById,
-//  selectCommentsByArticleId,
   insertCommentOnArticle,
 } = require('../models/comments.models.js');
 const { checkArticleExists } = require('../models/articles.models.js');
