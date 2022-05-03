@@ -11,11 +11,11 @@ This is a news api inspired by reddit and created with Node.js, Express, and Pos
   - [Seeding & Testing <a name="seeding-testing"></a>](#seeding--testing-)
 - [Link To Hosted Application on Heroku <a name="link-to-api"></a>](#link-to-api-)
 
-# General-Information <a name="general-information"></a>
+## General-Information <a name="general-information"></a>
 
 The Newsfly backend API was the first individual project undertaken as part of the [Northcoders Bootcamp](https://northcoders.com/) and is coupled with a React-based frontend user interface. This API leverages an Express server with RESTful API endpoints that retrieve article, comment and user data from a PSQL database. It uses Node.js and particularly node-postgres in order to GET, POST, PATCH and DELETE data from the database. The project follows the model/controller architecture, where the models are responsible for the queries to the database and the controllers handle routing and error-handling. This application was developed using a test-driven development (TDD) paradigm using Jest and Supertest.
 
-# Technologies <a name="technologies"></a>
+## Technologies <a name="technologies"></a>
 
 ```
 - Node.js: 16.13.0
@@ -26,9 +26,9 @@ The Newsfly backend API was the first individual project undertaken as part of t
 - supertest: 6.2.2
 ```
 
-# Setup <a name="setup"></a>
+## Setup <a name="setup"></a>
 
-## Cloning & Dependencies <a name="cloning-dependencies"></a>
+### Cloning & Dependencies <a name="cloning-dependencies"></a>
 
 Clone this repository and install dependencies:
 
@@ -58,7 +58,7 @@ Dependencies required to run this app:
 - pg: 8.7.3
 ```
 
-## Create dotenv files <a name="create-dotenv-files"></a>
+### Create dotenv files <a name="create-dotenv-files"></a>
 
 This project requires both test and development databases and environments. Two <strong>dotenv files</strong> are therefore required that contain the correct database names for each environment. In the root directory of this app create <strong>.env.test</strong> and <strong>.env.development</strong> files, and add to each the following line:
 
@@ -66,7 +66,7 @@ This project requires both test and development databases and environments. Two 
 
 The relationship between these two files and the databases is contained in <strong>./db/connection.js</strong>
 
-## Seeding & Testing <a name="seeding-testing"></a>
+### Seeding & Testing <a name="seeding-testing"></a>
 
 Before running the test or delveloper environments, the databases require initiating (setup-dbs drops - deletes - and creates the database) seeding with data. To do this, run the scripts below from the command line (see package.json for more information about these scripts):
 
@@ -81,6 +81,6 @@ To run the tests:
 - npm test
 ```
 
-# Link to API <a name="link-to-api"></a>
+## Link to API <a name="link-to-api"></a>
 
 <a href="http://ncdc-backend.herokuapp.com/api">Hosted Newsfly API</a>
