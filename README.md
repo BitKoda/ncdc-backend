@@ -1,6 +1,8 @@
 # Newsfly Backend API
 
-This is a news api inspired by reddit and created with Node.js, Express, and PostgreSQL. Testing is done with Jest and Supertest, and hosted on Heroku.
+This is a news api created with Node.js, Express, and PostgreSQL. Testing is done with Jest and Supertest, and hosted on Heroku. 
+
+This project forms one half of the Northcoders individual project - a news app, similar to reddit. The other half of this project is the frontend API, the repository for which can be found [here on Github](https://github.com/BitKoda/newsfly-frontend).
 
 # Table of contents
 - [General-Information <a name="general-information"></a>](#general-information-)
