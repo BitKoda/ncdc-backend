@@ -1,4 +1,4 @@
-# NCDC-BACKEND API
+# Newsfly Backend API
 
 This is a news api inspired by reddit and created with Node.js, Express, and PostgreSQL. Testing is done with Jest and Supertest, and hosted on Heroku.
 
@@ -13,7 +13,7 @@ This is a news api inspired by reddit and created with Node.js, Express, and Pos
 
 # General-Information <a name="general-information"></a>
 
-The NCDC-Backend news API leverages an Express server with RESTful API endpoints that retrieve article, comment and user data from a PSQL database. It uses Node.js and particularly node-postgres in order to GET, POST, PATCH and DELETE data from the database. The project follows the model/controller architecture, where the models are responsible for the queries to the database and the controllers handle routing and error-handling. The NCDC-Backend was the first individual project undertaken as part of the Northcoders Bootcamp and is coupled with a React-based Frontend user interface. This application was developed using a test-driven development (TDD) paradigm using Jest and Supertest.
+The Newsfly backend API was the first individual project undertaken as part of the [Northcoders Bootcamp](https://northcoders.com/) and is coupled with a React-based frontend user interface. This API leverages an Express server with RESTful API endpoints that retrieve article, comment and user data from a PSQL database. It uses Node.js and particularly node-postgres in order to GET, POST, PATCH and DELETE data from the database. The project follows the model/controller architecture, where the models are responsible for the queries to the database and the controllers handle routing and error-handling. This application was developed using a test-driven development (TDD) paradigm using Jest and Supertest.
 
 # Technologies <a name="technologies"></a>
 
@@ -83,4 +83,4 @@ To run the tests:
 
 # Link to API <a name="link-to-api"></a>
 
-<a href="http://ncdc-backend.herokuapp.com/api">Hosted NCDC news API</a>
+<a href="http://ncdc-backend.herokuapp.com/api">Hosted Newsfly API</a>
